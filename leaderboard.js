@@ -16,7 +16,7 @@ if (Meteor.isClient) {
 
   Template.leaderboard.selected_name = function () {
     var player = Players.findOne(Session.get("selected_player"));
-    return player && player.name;
+    return player && player.name; //or pass player, access in html using ognl style
   };
 
   Template.player.selected = function () {
@@ -43,6 +43,12 @@ if (Meteor.isClient) {
   Template.leaderboard.events({
     'click input.reset': function () {
       Meteor.call("clearData");
+    }
+  }); 
+
+  Template.leaderboard.events({
+    'click input.remove': function () {
+      Players.remove(Session.get("selected_player"));
     }
   }); 
 
