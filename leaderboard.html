@@ -10,6 +10,7 @@
 
 <template name="leaderboard">
   <input type="button" class="sort" value="Sort by {{sort_direction}}" />
+  <input type="button" class="reset" value="Reset Score" />
   <div class="leaderboard">
     {{#each players}}
       {{> player}}

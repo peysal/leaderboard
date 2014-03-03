@@ -41,6 +41,12 @@ if (Meteor.isClient) {
   });  
 
   Template.leaderboard.events({
+    'click input.reset': function () {
+      Meteor.call("clearData");
+    }
+  }); 
+
+  Template.leaderboard.events({
     'click input.inc': function () {
       Players.update(Session.get("selected_player"), {$inc: {score: 5}});
     }
@@ -55,16 +61,28 @@ if (Meteor.isClient) {
 
 // On server startup, create some players if the database is empty.
 if (Meteor.isServer) {
-  Meteor.startup(function () {
-    if (Players.find().count() === 0) { //i need to clean up db if want to see the changes
-      var names = ["Ada Lovelace",
+  var names = ["Ada Lovelace",
                    "Grace Hopper",
                    "Marie Curie",
                    "Carl Friedrich Gauss",
                    "Nikola Tesla",
                    "Claude Shannon"];
-      for (var i = 0; i < names.length; i++)
-        Players.insert({name: names[i], score: Math.floor(Random.fraction()*100)*5});
+  var myRandom = function() {
+    for (var i = 0; i < names.length; i++) {
+      Players.insert({name: names[i], score: Math.floor(Random.fraction()*10)*5});
     }
+  };
+
+  Meteor.startup(function () {
+    if (Players.find().count() === 0) { //i need to clean up db if want to see the changes
+      myRandom();
+    }
+  });
+  Meteor.methods({
+    clearData : function() {
+      console.log("server side call");
+      Players.remove({});
+      myRandom();
+    }  
   });
 }
