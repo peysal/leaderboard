@@ -9,6 +9,7 @@
 </body>
 
 <template name="leaderboard">
+  <input type="button" class="sort" value="Sort by {{sort_direction}}" />
   <div class="leaderboard">
     {{#each players}}
       {{> player}}

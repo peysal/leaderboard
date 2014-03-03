@@ -60,3 +60,7 @@ body {
 .inc {
   cursor: pointer;
 }
+
+.sort {
+  cursor: pointer;
+}
