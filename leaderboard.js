@@ -53,6 +53,12 @@ if (Meteor.isClient) {
   }); 
 
   Template.leaderboard.events({
+    'click input.add': function () {
+      Players.insert({name: "New Scientist", score: Math.floor(Random.fraction()*10)*5});
+    }
+  }); 
+
+  Template.leaderboard.events({
     'click input.inc': function () {
       Players.update(Session.get("selected_player"), {$inc: {score: 5}});
     }
